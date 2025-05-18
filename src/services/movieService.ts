@@ -3,7 +3,7 @@ import { type Movie } from '../types/movie';
 
 const API_KEY = import.meta.env.VITE_TMDB_TOKEN;
 
-interface FetchMoviesPros {
+interface FetchMoviesProps {
   query: string;
   page?: number;
 }
@@ -17,15 +17,15 @@ interface MoviesHttpResponse {
 export async function fetchMovies({
   query,
   page = 1,
-}: FetchMoviesPros): Promise<Movie[]> {
-  const responce = await axios.get<MoviesHttpResponse>(
+}: FetchMoviesProps): Promise<MoviesHttpResponse> {
+  const response = await axios.get<MoviesHttpResponse>(
     `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=${page}`,
     {
       headers: {
-        Authorization: `Bearer ${API_KEY}`,
         accept: 'application/json',
+        Authorization: `Bearer ${API_KEY}`,
       },
     }
   );
-  return responce.data.results;
+  return response.data;
 }

@@ -34,10 +34,10 @@ export default function App() {
     setIsError(false);
     try {
       const data = await fetchMovies({ query });
-      if (data.length == 0) {
+      if (data.results.length == 0) {
         throw new Error('No movies found for your request.');
       }
-      setMovies([...data]);
+      setMovies([...data.results]);
     } catch (error) {
       toast.error(`${error}`);
       setIsError(true);

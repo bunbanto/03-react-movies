@@ -6,9 +6,6 @@ interface MovieGridProps {
   movies: Movie[];
 }
 
-const placeholderImg: string =
-  'https://s3.eu-west-1.amazonaws.com/mod.gov.ua-statics-bucket/Kyrylo_Budanov_96de405d48.jpg';
-
 export default function MovieGrid({ onSelect, movies }: MovieGridProps) {
   return (
     <ul className={css.grid}>
@@ -17,11 +14,7 @@ export default function MovieGrid({ onSelect, movies }: MovieGridProps) {
           <div className={css.card} onClick={() => onSelect(movie)}>
             <img
               className={css.image}
-              src={
-                movie.poster_path !== null
-                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                  : placeholderImg
-              }
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
               loading="lazy"
             />

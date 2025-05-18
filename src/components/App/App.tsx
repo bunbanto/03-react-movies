@@ -23,11 +23,8 @@ export default function App() {
 
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  const handleSelectMovie = (movieId: number) => {
-    const result = movies.find(movie => movie.id === movieId);
-    if (result) {
-      setSelectedMovie(result);
-    }
+  const handleSelectMovie = (movie: Movie) => {
+    setSelectedMovie(movie);
     openModal();
   };
 

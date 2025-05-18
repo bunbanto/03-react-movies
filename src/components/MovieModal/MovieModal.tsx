@@ -30,6 +30,9 @@ interface MovieModalProps {
   onClose: () => void;
 }
 
+const placeholderImage: string =
+  'https://armyinform.com.ua/wp-content/uploads/2024/05/45df04fdc242147063b1a9e213f42900.jpeg';
+
 export default function MovieModal({ movie, onClose }: MovieModalProps) {
   const handleBackDropClick = useCallback(
     (evt: React.MouseEvent<HTMLDivElement>) => {

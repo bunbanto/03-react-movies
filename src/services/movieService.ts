@@ -8,17 +8,17 @@ interface FetchMoviesProps {
   page?: number;
 }
 
-interface MoviesHttpResponse {
+interface MoviesResponse {
   page: number;
   results: Movie[];
-  totalPages: number;
+  total_pages: number;
 }
 
 export async function fetchMovies({
   query,
   page = 1,
-}: FetchMoviesProps): Promise<MoviesHttpResponse> {
-  const response = await axios.get<MoviesHttpResponse>(
+}: FetchMoviesProps): Promise<MoviesResponse> {
+  const response = await axios.get<MoviesResponse>(
     `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=${page}`,
     {
       headers: {

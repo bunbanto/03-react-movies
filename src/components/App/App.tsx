@@ -11,11 +11,11 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoad, setIsLoad] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => {
+  const openModal = (): void => setIsModalOpen(true);
+  const closeModal = (): void => {
     setIsModalOpen(false);
     setSelectedMovie(null);
   };
@@ -28,21 +28,26 @@ export default function App() {
     openModal();
   };
 
-  const handleSearch = async (query: string) => {
+  const handleSearch = async (searchQuery: string) => {
     setMovies([]);
-    setIsLoad(true);
+    setIsLoading(true);
     setIsError(false);
+
     try {
-      const data = await fetchMovies({ query });
-      if (data.results.length == 0) {
-        throw new Error('No movies found for your request.');
+      const { results } = await fetchMovies({ query: searchQuery });
+
+      if (results.length === 0) {
+        toast.error('No movies found for your request.');
+        return;
       }
-      setMovies([...data.results]);
-    } catch (error) {
-      toast.error(`${error}`);
-      setIsError(true);
+
+      setMovies(results);
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      toast.error(errorMessage);
     } finally {
-      setIsLoad(false);
+      setIsLoading(false);
     }
   };
 
@@ -53,7 +58,7 @@ export default function App() {
       {movies.length > 0 && (
         <MovieGrid movies={movies} onSelect={handleSelectMovie} />
       )}
-      {isLoad && <Loader />}
+      {isLoading && <Loader />}
       {isError && <ErrorMessage />}
       {isModalOpen && <MovieModal movie={selectedMovie} onClose={closeModal} />}
     </div>

@@ -43,6 +43,7 @@ export default function App() {
 
       setMovies(results);
     } catch (error: unknown) {
+      setIsError(true);
       const errorMessage =
         error instanceof Error ? error.message : String(error);
       toast.error(errorMessage);
